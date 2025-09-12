@@ -39,6 +39,13 @@ public class Student {
     @Column(name = "guardian_phone")
     private String guardianPhone;
 
+    @ManyToOne
+    @JoinColumn(name = "document_type_id")
+    private DocumentType documentType;
+
+    @JoinColumn(name = "document_number", nullable = false)
+    private String documentNumber;
+
     public Student(String firstName, String lastName, LocalDate birthDate, String addres, String phone, String guardianName, String guardianPhone){
         this.firstName = firstName;
         this.lastName = lastName;
