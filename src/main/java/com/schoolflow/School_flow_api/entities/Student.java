@@ -46,7 +46,7 @@ public class Student {
     @JoinColumn(name = "document_number", nullable = false)
     private String documentNumber;
 
-    public Student(String firstName, String lastName, LocalDate birthDate, String addres, String phone, String guardianName, String guardianPhone){
+    public Student(String firstName, String lastName, LocalDate birthDate, String addres, String phone, String guardianName, String guardianPhone, DocumentType documentType, String documentNumber){
         this.firstName = firstName;
         this.lastName = lastName;
         this.birthDate = birthDate;
@@ -54,5 +54,7 @@ public class Student {
         this.phone = phone;
         this.guardianName = guardianName;
         this.guardianPhone = guardianPhone;
+        this.documentType = documentType;
+        this.documentNumber = documentNumber;
     }
 }

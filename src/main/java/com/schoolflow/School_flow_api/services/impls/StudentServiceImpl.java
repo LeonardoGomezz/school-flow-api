@@ -44,10 +44,43 @@ public class StudentServiceImpl implements StudentService {
     public StudentDTO createStudent(StudentDTO studentDTO) {
         DocumentType doctype = this.documentTypeRepository.findByCode(studentDTO.getDocumentType())
                 .orElseThrow(() -> new EntityNotFoundException("Document type not found"));
-        Student newStudent = new Student(studentDTO.getFirstName(), studentDTO.getLastName(), studentDTO.getBirthDate(), studentDTO.getAddress(), studentDTO.getPhone(), studentDTO.getGuardianName(), studentDTO.getGuardianPhone());
+        Student newStudent = new Student(studentDTO.getFirstName(), studentDTO.getLastName(), studentDTO.getBirthDate(), studentDTO.getAddress(), studentDTO.getPhone(), studentDTO.getGuardianName(), studentDTO.getGuardianPhone(), doctype, studentDTO.getDocumentNumber());
         newStudent = this.studentRepository.save(newStudent);
         studentDTO.setId(newStudent.getId());
         return studentDTO;
+    }
+
+    @Transactional
+    @Override
+    public StudentDTO updateStudent(Long studentId, StudentDTO studentDTO) {
+        Student existingStudent = this.studentRepository.findById(studentId).orElse(null);
+        DocumentType docType = this.documentTypeRepository.findByCode(studentDTO.getDocumentType()).orElse(null);
+
+        if (existingStudent == null){
+            throw new EntityNotFoundException("Student not found");
+        }
+
+        if (docType == null){
+            throw new EntityNotFoundException("Document type not found");
+        }
+
+        existingStudent.setFirstName(studentDTO.getFirstName());
+        existingStudent.setLastName(studentDTO.getLastName());
+        existingStudent.setBirthDate(studentDTO.getBirthDate());
+        existingStudent.setAddress(studentDTO.getAddress());
+        existingStudent.setPhone(studentDTO.getPhone());
+        existingStudent.setGuardianName(studentDTO.getGuardianName());
+        existingStudent.setGuardianPhone(studentDTO.getGuardianPhone());
+        existingStudent.setDocumentType(docType);
+        existingStudent.setDocumentNumber(studentDTO.getDocumentNumber());
+        this.studentRepository.save(existingStudent);
+        return studentDTO;
+    }
+
+    @Transactional
+    @Override
+    public void deleteStudent(Long studentId) {
+        this.studentRepository.deleteById(studentId);
     }
 
 }
