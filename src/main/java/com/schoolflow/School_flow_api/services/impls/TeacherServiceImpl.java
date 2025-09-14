@@ -72,4 +72,9 @@ public class TeacherServiceImpl implements TeacherService {
         this.teacherRepository.save(existingTeacher);
         return teacherDTO;
     }
+
+    @Override
+    public void deleteTeacher(Long teacherId) {
+        this.teacherRepository.deleteById(teacherId);
+    }
 }
