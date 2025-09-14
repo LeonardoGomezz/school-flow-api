@@ -1,10 +1,17 @@
 package com.schoolflow.School_flow_api.services.interfaces;
 
+import com.schoolflow.School_flow_api.dto.TeacherDTO;
 import com.schoolflow.School_flow_api.entities.Teacher;
 import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 
 public interface TeacherService {
+
     List<Teacher> getAllTeachers();
+
+    TeacherDTO getTeacherById(Long teacherId);
+
+    TeacherDTO createTeacher(TeacherDTO teacherDTO);
+
 }

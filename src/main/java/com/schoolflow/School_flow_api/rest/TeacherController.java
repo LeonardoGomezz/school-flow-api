@@ -1,12 +1,11 @@
 package com.schoolflow.School_flow_api.rest;
 
+import com.schoolflow.School_flow_api.dto.TeacherDTO;
 import com.schoolflow.School_flow_api.entities.Teacher;
 import com.schoolflow.School_flow_api.services.interfaces.TeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -20,5 +19,15 @@ public class TeacherController {
     @GetMapping
     public ResponseEntity<List<Teacher>> getAllTeachers(){
         return ResponseEntity.ok(this.teacherService.getAllTeachers());
+    }
+
+    @GetMapping("{teacherId}")
+    public ResponseEntity<TeacherDTO> getTeacherById(@PathVariable Long teacherId){
+        return ResponseEntity.ok(this.teacherService.getTeacherById(teacherId));
+    }
+
+    @PostMapping
+    public ResponseEntity<TeacherDTO> createTeacher(@RequestBody TeacherDTO teacherDTO){
+        return ResponseEntity.ok(this.teacherService.createTeacher(teacherDTO));
     }
 }

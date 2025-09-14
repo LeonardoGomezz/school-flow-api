@@ -18,7 +18,7 @@ public class TeacherDTO {
 
     @NotBlank
     @Size(min = 3, max = 100, message = "La propiedad debe tener un valor de minimo  3 caracteres y maximo de 100")
-    private String fristName;
+    private String firstName;
 
     @NotBlank
     @Size(min = 3, max = 100, message = "La propiedad debe tener un valor de minimo  3 caracteres y maximo de 100")

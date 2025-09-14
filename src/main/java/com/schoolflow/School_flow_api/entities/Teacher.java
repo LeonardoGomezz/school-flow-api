@@ -17,7 +17,7 @@ public class Teacher {
     private Long id;
 
     @Column(name = "first_name")
-    private String fristName;
+    private String firstName;
 
     @Column(name = "last_name")
     private String lastName;
@@ -32,7 +32,7 @@ public class Teacher {
     private String phone;
 
     public Teacher(String firstName, String lastName, String academicBackground, String address, String phone){
-        this.fristName = firstName;
+        this.firstName = firstName;
         this.lastName = lastName;
         this.academicBackground = academicBackground;
         this.address = address;
