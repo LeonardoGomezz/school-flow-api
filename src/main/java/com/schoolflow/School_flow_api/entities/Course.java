@@ -25,6 +25,10 @@ public class Course {
     @Column(name = "school_year")
     private Integer schoolYear;
 
+    @ManyToOne
+    @JoinColumn(name = "teacher_id", nullable = true)
+    private Teacher teacher;
+
     public Course(String name, Integer grade, Integer schoolYear){
         this.name = name;
         this.grade = grade;

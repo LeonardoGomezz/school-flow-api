@@ -15,6 +15,7 @@ import lombok.NoArgsConstructor;
 public class CourseDTO {
 
     private Long id;
+    private Long teacherId;
 
     @NotBlank
     @Size(min = 5, max = 100, message = "La propiedad como minimo debe tener un valor de 5 caracteres y maximo de 100 caracteres")
