@@ -24,6 +24,8 @@ public class StudentDTO {
     @NotBlank
     @Size(min = 2, max = 126, message = "la propiedad name minimo debe tener un valor de 2 caracteres y un maximo de 126 caracteres")
     private String lastName;
+
+    @NotBlank
     private LocalDate birthDate;
 
     @NotBlank
