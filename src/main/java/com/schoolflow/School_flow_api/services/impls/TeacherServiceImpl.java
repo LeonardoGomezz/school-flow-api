@@ -55,4 +55,21 @@ public class TeacherServiceImpl implements TeacherService {
         teacherDTO.setId(newTeacher.getId());
         return teacherDTO;
     }
+
+    @Override
+    public TeacherDTO updateTeacher(Long teacherId, TeacherDTO teacherDTO) {
+        Teacher existingTeacher = this.teacherRepository.findById(teacherId).orElse(null);
+
+        if (existingTeacher == null){
+            throw new EntityNotFoundException("Teacher not found");
+        }
+
+        existingTeacher.setFirstName(teacherDTO.getFirstName());
+        existingTeacher.setLastName(teacherDTO.getLastName());
+        existingTeacher.setAcademicBackground(teacherDTO.getAcademicBackground());
+        existingTeacher.setAddress(teacherDTO.getAddress());
+        existingTeacher.setPhone(teacherDTO.getPhone());
+        this.teacherRepository.save(existingTeacher);
+        return teacherDTO;
+    }
 }

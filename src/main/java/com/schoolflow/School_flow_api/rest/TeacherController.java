@@ -30,4 +30,9 @@ public class TeacherController {
     public ResponseEntity<TeacherDTO> createTeacher(@RequestBody TeacherDTO teacherDTO){
         return ResponseEntity.ok(this.teacherService.createTeacher(teacherDTO));
     }
+
+    @PutMapping("/{teacherId}")
+    public ResponseEntity<TeacherDTO> updateTeacher(@PathVariable Long teacherId, @RequestBody TeacherDTO teacherDTO){
+        return ResponseEntity.ok(this.teacherService.updateTeacher(teacherId, teacherDTO));
+    }
 }
