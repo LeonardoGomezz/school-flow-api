@@ -56,6 +56,7 @@ public class TeacherServiceImpl implements TeacherService {
         return teacherDTO;
     }
 
+    @Transactional
     @Override
     public TeacherDTO updateTeacher(Long teacherId, TeacherDTO teacherDTO) {
         Teacher existingTeacher = this.teacherRepository.findById(teacherId).orElse(null);
@@ -73,8 +74,20 @@ public class TeacherServiceImpl implements TeacherService {
         return teacherDTO;
     }
 
+    @Transactional
     @Override
     public void deleteTeacher(Long teacherId) {
         this.teacherRepository.deleteById(teacherId);
+    }
+
+    @Override
+    public Teacher getTeacherEntityById(Long teacherId){
+        Teacher teacher = this.teacherRepository.findById(teacherId).orElse(null);
+
+        if (teacher == null){
+            return null;
+        }
+
+        return teacher;
     }
 }

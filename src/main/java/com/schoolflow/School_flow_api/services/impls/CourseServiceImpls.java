@@ -2,8 +2,10 @@ package com.schoolflow.School_flow_api.services.impls;
 
 import com.schoolflow.School_flow_api.dto.CourseDTO;
 import com.schoolflow.School_flow_api.entities.Course;
+import com.schoolflow.School_flow_api.entities.Teacher;
 import com.schoolflow.School_flow_api.repositories.CourseRepository;
 import com.schoolflow.School_flow_api.services.interfaces.CourseService;
+import com.schoolflow.School_flow_api.services.interfaces.TeacherService;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +18,10 @@ public class CourseServiceImpls implements CourseService {
 
     @Autowired
     private CourseRepository courseRepository;
+
+    @Autowired
+    private TeacherService teacherService;
+
     @Override
     public List<Course> getAllCourses() {
         return this.courseRepository.findAll();
@@ -71,6 +77,32 @@ public class CourseServiceImpls implements CourseService {
         this.courseRepository.save(existingCourse);
 
         return courseDTO;
+    }
+
+    @Override
+    public CourseDTO asignTeacherToCourse(Long courseId, Long teacherId) {
+        Course course = this.courseRepository.findById(courseId).orElse(null);
+        Teacher teacher = this.teacherService.getTeacherEntityById(teacherId);
+
+        if (course == null){
+            throw new EntityNotFoundException("course not found");
+        }
+
+        if (teacher == null){
+            throw new EntityNotFoundException("course not found");
+        }
+
+        course.setTeacher(teacher);
+
+        this.courseRepository.save(course);
+
+        return new CourseDTO(
+                courseId,
+                teacherId,
+                course.getName(),
+                course.getGrade(),
+                course.getSchoolYear()
+        );
     }
 
 }

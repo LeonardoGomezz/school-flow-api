@@ -35,4 +35,9 @@ public class CourseController {
     public ResponseEntity<CourseDTO> updateCourse(@PathVariable Long courseId, @RequestBody CourseDTO courseDTO) {
         return ResponseEntity.ok(this.courseService.updateCourse(courseId, courseDTO));
     }
+
+    @PutMapping("/{courseId}/asign/{teacherId}")
+    public ResponseEntity<CourseDTO> asignTeachorToCourse(@PathVariable Long courseId, @PathVariable Long teacherId){
+        return ResponseEntity.ok(this.courseService.asignTeacherToCourse(courseId, teacherId));
+    }
 }

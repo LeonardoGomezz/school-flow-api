@@ -17,4 +17,6 @@ public interface TeacherService {
     TeacherDTO updateTeacher(Long teacherId, TeacherDTO teacherDTO);
 
     void deleteTeacher(Long teacherId);
+
+    Teacher getTeacherEntityById(Long teacherId);
 }

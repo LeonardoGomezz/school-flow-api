@@ -14,4 +14,6 @@ public interface CourseService {
     CourseDTO createCourse(CourseDTO courseDTO);
 
     CourseDTO updateCourse(Long courseId, CourseDTO courseDTO);
+
+    CourseDTO asignTeacherToCourse(Long courseId, Long teachirId);
 }
