@@ -105,4 +105,28 @@ public class CourseServiceImpls implements CourseService {
         );
     }
 
+    @Override
+    public CourseDTO unAsignTeacherToCourse(Long courseId, Long teacherId) {
+        Course course = this.courseRepository.findById(courseId).orElse(null);
+        Teacher teacher = this.teacherService.getTeacherEntityById(teacherId);
+
+        if (course == null){
+            throw new EntityNotFoundException("course not found");
+        }
+
+        if (teacher == null){
+            throw new EntityNotFoundException("course not found");
+        }
+
+        course.setTeacher(null);
+        this.courseRepository.save(course);
+        return new CourseDTO(
+                courseId,
+                teacherId,
+                course.getName(),
+                course.getGrade(),
+                course.getSchoolYear()
+        );
+    }
+
 }

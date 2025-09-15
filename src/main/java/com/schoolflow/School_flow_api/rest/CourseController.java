@@ -40,4 +40,9 @@ public class CourseController {
     public ResponseEntity<CourseDTO> asignTeachorToCourse(@PathVariable Long courseId, @PathVariable Long teacherId){
         return ResponseEntity.ok(this.courseService.asignTeacherToCourse(courseId, teacherId));
     }
+
+    @PutMapping("/{courseId}/unassign/{teacherId}")
+    public ResponseEntity<CourseDTO> unAsignTeacherToCourse(@PathVariable Long courseId, @PathVariable Long teacherId){
+        return ResponseEntity.ok(this.courseService.unAsignTeacherToCourse(courseId, teacherId));
+    }
 }
