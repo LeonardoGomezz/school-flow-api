@@ -1,6 +1,7 @@
 package com.schoolflow.School_flow_api.services.impls;
 
 import com.schoolflow.School_flow_api.dto.CourseDTO;
+import com.schoolflow.School_flow_api.dto.TeacherDTO;
 import com.schoolflow.School_flow_api.entities.Course;
 import com.schoolflow.School_flow_api.entities.Teacher;
 import com.schoolflow.School_flow_api.repositories.CourseRepository;
@@ -23,8 +24,17 @@ public class CourseServiceImpls implements CourseService {
     private TeacherService teacherService;
 
     @Override
-    public List<Course> getAllCourses() {
-        return this.courseRepository.findAll();
+    public List<CourseDTO> getAllCourses() {
+        return this.courseRepository.findAll().stream()
+                .map(course -> CourseDTO.builder()
+                        .id(course.getId())
+                        .teacherId(course.getTeacher() != null ? course.getTeacher().getId() : null)
+                        .name(course.getName())
+                        .grade(course.getGrade())
+                        .schoolYear(course.getSchoolYear())
+                        .build()
+                )
+                .toList();
     }
 
     @Override
@@ -35,18 +45,28 @@ public class CourseServiceImpls implements CourseService {
             throw  new EntityNotFoundException("Course not found");
         }
 
-        CourseDTO  courseDTO = new CourseDTO();
-        courseDTO.setId(course.getId());
-        courseDTO.setName(course.getName());
-        courseDTO.setGrade(course.getGrade());
-        courseDTO.setSchoolYear(course.getSchoolYear());
+        Teacher teacher = course.getTeacher();
 
-        if(course.getTeacher() != null){
-            courseDTO.setTeacherId(course.getTeacher().getId());
-        }else{
-            courseDTO.setTeacherId(null);
+        TeacherDTO teacherDTO = null;
+
+        if (teacher != null) {
+            teacherDTO = TeacherDTO.builder()
+                    .id(teacher.getId())
+                    .firstName(teacher.getFirstName())
+                    .lastName(teacher.getLastName())
+                    .academicBackground(teacher.getAcademicBackground())
+                    .address(teacher.getAddress())
+                    .phone(teacher.getPhone())
+                    .build();
         }
-        return courseDTO;
+
+        return CourseDTO.builder()
+                .id(course.getId())
+                .teacher(teacherDTO)
+                .name(course.getName())
+                .grade(course.getGrade())
+                .schoolYear(course.getSchoolYear())
+                .build();
     }
 
     @Transactional
@@ -96,13 +116,13 @@ public class CourseServiceImpls implements CourseService {
 
         this.courseRepository.save(course);
 
-        return new CourseDTO(
-                courseId,
-                teacherId,
-                course.getName(),
-                course.getGrade(),
-                course.getSchoolYear()
-        );
+        return CourseDTO.builder()
+                .id(course.getId())
+                .teacherId(teacherId)
+                .name(course.getName())
+                .grade(course.getGrade())
+                .schoolYear(course.getSchoolYear())
+                .build();
     }
 
     @Override
@@ -120,13 +140,13 @@ public class CourseServiceImpls implements CourseService {
 
         course.setTeacher(null);
         this.courseRepository.save(course);
-        return new CourseDTO(
-                courseId,
-                teacherId,
-                course.getName(),
-                course.getGrade(),
-                course.getSchoolYear()
-        );
+        return CourseDTO.builder()
+                .id(course.getId())
+                .teacherId(teacherId)
+                .name(course.getName())
+                .grade(course.getGrade())
+                .schoolYear(course.getSchoolYear())
+                .build();
     }
 
 }

@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface CourseService {
 
-    List<Course> getAllCourses();
+    List<CourseDTO> getAllCourses();
 
     CourseDTO getCourseById(Long courseId);
 
