@@ -5,6 +5,7 @@ import com.schoolflow.School_flow_api.entities.Course;
 import com.schoolflow.School_flow_api.repositories.CourseRepository;
 import com.schoolflow.School_flow_api.services.interfaces.CourseService;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -42,6 +43,7 @@ public class CourseServiceImpls implements CourseService {
         return courseDTO;
     }
 
+    @Transactional
     @Override
     public CourseDTO createCourse(CourseDTO courseDTO) {
         Course newCourse = new Course(
@@ -53,4 +55,22 @@ public class CourseServiceImpls implements CourseService {
         courseDTO.setId(newCourse.getId());
         return courseDTO;
     }
+
+    @Override
+    public CourseDTO updateCourse(Long courseId, CourseDTO courseDTO) {
+        Course existingCourse = this.courseRepository.findById(courseId).orElse(null);
+
+        if (existingCourse == null){
+            throw new EntityNotFoundException("Course not found");
+        }
+
+        existingCourse.setName(courseDTO.getName());
+        existingCourse.setGrade(courseDTO.getGrade());
+        existingCourse.setSchoolYear(courseDTO.getSchoolYear());
+
+        this.courseRepository.save(existingCourse);
+
+        return courseDTO;
+    }
+
 }
