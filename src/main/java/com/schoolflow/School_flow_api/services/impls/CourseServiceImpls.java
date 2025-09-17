@@ -1,10 +1,14 @@
 package com.schoolflow.School_flow_api.services.impls;
 
 import com.schoolflow.School_flow_api.dto.CourseDTO;
+import com.schoolflow.School_flow_api.dto.EnrolledStudentDTO;
 import com.schoolflow.School_flow_api.dto.TeacherDTO;
 import com.schoolflow.School_flow_api.entities.Course;
+import com.schoolflow.School_flow_api.entities.Inscription;
+import com.schoolflow.School_flow_api.entities.Student;
 import com.schoolflow.School_flow_api.entities.Teacher;
 import com.schoolflow.School_flow_api.repositories.CourseRepository;
+import com.schoolflow.School_flow_api.repositories.InscriptionRepository;
 import com.schoolflow.School_flow_api.services.interfaces.CourseService;
 import com.schoolflow.School_flow_api.services.interfaces.TeacherService;
 import jakarta.persistence.EntityNotFoundException;
@@ -22,6 +26,9 @@ public class CourseServiceImpls implements CourseService {
 
     @Autowired
     private TeacherService teacherService;
+
+    @Autowired
+    private InscriptionRepository inscriptionRepository;
 
     @Override
     public List<CourseDTO> getAllCourses() {
@@ -67,6 +74,24 @@ public class CourseServiceImpls implements CourseService {
                 .grade(course.getGrade())
                 .schoolYear(course.getSchoolYear())
                 .build();
+    }
+
+    @Override
+    public List<EnrolledStudentDTO> getStudentsByCourseId(Long courseId) {
+        List<Inscription> inscriptions = this.inscriptionRepository.findByCourseId(courseId);
+
+        return inscriptions.stream()
+                .map(inscription -> {
+                    Student student = inscription.getStudent();
+                    return new EnrolledStudentDTO(
+                            student.getId(),
+                            student.getFirstName(),
+                            student.getLastName(),
+                            student.getDocumentType().getCode(),
+                            student.getDocumentNumber()
+                    );
+                })
+                .toList();
     }
 
     @Transactional
@@ -147,6 +172,11 @@ public class CourseServiceImpls implements CourseService {
                 .grade(course.getGrade())
                 .schoolYear(course.getSchoolYear())
                 .build();
+    }
+
+    @Override
+    public void incorporateStudentToCourse(Long studentId, Long courseId) {
+
     }
 
 }
