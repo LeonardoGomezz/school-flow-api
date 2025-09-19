@@ -38,7 +38,6 @@ public class CourseServiceImpls implements CourseService {
                         .teacherId(course.getTeacher() != null ? course.getTeacher().getId() : null)
                         .name(course.getName())
                         .grade(course.getGrade())
-                        .schoolYear(course.getSchoolYear())
                         .build()
                 )
                 .toList();
@@ -72,7 +71,6 @@ public class CourseServiceImpls implements CourseService {
                 .teacher(teacherDTO)
                 .name(course.getName())
                 .grade(course.getGrade())
-                .schoolYear(course.getSchoolYear())
                 .build();
     }
 
@@ -99,8 +97,7 @@ public class CourseServiceImpls implements CourseService {
     public CourseDTO createCourse(CourseDTO courseDTO) {
         Course newCourse = new Course(
                 courseDTO.getName(),
-                courseDTO.getGrade(),
-                courseDTO.getSchoolYear()
+                courseDTO.getGrade()
         );
         newCourse = this.courseRepository.save(newCourse);
         courseDTO.setId(newCourse.getId());
@@ -117,8 +114,6 @@ public class CourseServiceImpls implements CourseService {
 
         existingCourse.setName(courseDTO.getName());
         existingCourse.setGrade(courseDTO.getGrade());
-        existingCourse.setSchoolYear(courseDTO.getSchoolYear());
-
         this.courseRepository.save(existingCourse);
 
         return courseDTO;
@@ -146,7 +141,6 @@ public class CourseServiceImpls implements CourseService {
                 .teacherId(teacherId)
                 .name(course.getName())
                 .grade(course.getGrade())
-                .schoolYear(course.getSchoolYear())
                 .build();
     }
 
@@ -170,7 +164,6 @@ public class CourseServiceImpls implements CourseService {
                 .teacherId(teacherId)
                 .name(course.getName())
                 .grade(course.getGrade())
-                .schoolYear(course.getSchoolYear())
                 .build();
     }
 

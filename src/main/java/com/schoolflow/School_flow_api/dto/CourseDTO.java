@@ -26,14 +26,9 @@ public class CourseDTO {
     @Size(min = 1)
     private Integer grade;
 
-    @NotBlank
-    @Size(min = 4)
-    private Integer schoolYear;
-
-    public CourseDTO(Long id, String name, Integer grade, Integer schoolYear) {
+    public CourseDTO(Long id, String name, Integer grade) {
         this.id = id;
         this.name = name;
         this.grade = grade;
-        this.schoolYear = schoolYear;
     }
 }

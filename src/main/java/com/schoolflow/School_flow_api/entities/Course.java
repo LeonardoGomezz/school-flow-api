@@ -22,16 +22,12 @@ public class Course {
     @Column(name = "grade")
     private Integer grade;
 
-    @Column(name = "school_year")
-    private Integer schoolYear;
-
     @ManyToOne
     @JoinColumn(name = "teacher_id", nullable = true)
     private Teacher teacher;
 
-    public Course(String name, Integer grade, Integer schoolYear){
+    public Course(String name, Integer grade){
         this.name = name;
         this.grade = grade;
-        this.schoolYear = schoolYear;
     }
 }
