@@ -8,6 +8,7 @@ import com.schoolflow.School_flow_api.repositories.InscriptionRepository;
 import com.schoolflow.School_flow_api.repositories.StudentRepository;
 import com.schoolflow.School_flow_api.services.interfaces.InscriptionService;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,6 +26,7 @@ public class InscriptionServiceImpl implements InscriptionService {
     @Autowired
     private StudentRepository studentRepository;
 
+    @Transactional
     @Override
     public void includeStudentToCourse(Long studentId, Long courseId) {
         Course course = this.courseRepository.findById(courseId).orElse(null);
@@ -48,5 +50,27 @@ public class InscriptionServiceImpl implements InscriptionService {
         inscription.setInscriptionDate(LocalDate.now());
 
         inscription = inscriptionRepository.save(inscription);
+    }
+
+    @Transactional
+    @Override
+    public void excludeStudentToCourse(Long studentId, Long courseId) {
+        Course course = this.courseRepository.findById(courseId).orElse(null);
+        Student studen = this.studentRepository.findById(studentId).orElse(null);
+        Inscription inscription = this.inscriptionRepository.findByStudentIdAndCourseId(studentId, courseId).orElse(null);
+
+        if (course == null){
+            throw new EntityNotFoundException("Course not found");
+        }
+
+        if (studen == null){
+            throw new EntityNotFoundException("Student not found");
+        }
+
+        if (inscription == null){
+            throw new EntityNotFoundException("Inscription not found");
+        }
+
+        this.inscriptionRepository.delete(inscription);
     }
 }
