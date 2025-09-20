@@ -22,5 +22,19 @@ public class Attendance {
     private LocalDate date;
 
     @Column(name = "status")
-    private String status;
+    @Enumerated(EnumType.STRING)
+    private AttendanceStatus status;
+
+    @ManyToOne
+    @JoinColumn(name = "course_id", nullable = false)
+    private Course course;
+
+    @ManyToOne
+    @JoinColumn(name = "student_id", nullable = false)
+    private Student student;
+
+    public Attendance(LocalDate date, AttendanceStatus status){
+        this.date = date;
+        this.status = status;
+    }
 }
