@@ -1,8 +1,8 @@
 package com.schoolflow.School_flow_api.services.impls;
 
-import com.schoolflow.School_flow_api.dto.CourseDTO;
-import com.schoolflow.School_flow_api.dto.EnrolledStudentDTO;
-import com.schoolflow.School_flow_api.dto.TeacherDTO;
+import com.schoolflow.School_flow_api.dto.course.CourseDTO;
+import com.schoolflow.School_flow_api.dto.student.EnrolledStudentDTO;
+import com.schoolflow.School_flow_api.dto.teacher.TeacherDTO;
 import com.schoolflow.School_flow_api.entities.Course;
 import com.schoolflow.School_flow_api.entities.Inscription;
 import com.schoolflow.School_flow_api.entities.Student;

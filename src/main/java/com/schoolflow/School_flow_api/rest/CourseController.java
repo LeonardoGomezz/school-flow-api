@@ -1,17 +1,13 @@
 package com.schoolflow.School_flow_api.rest;
 
-import com.schoolflow.School_flow_api.dto.CourseDTO;
-import com.schoolflow.School_flow_api.dto.EnrolledStudentDTO;
-import com.schoolflow.School_flow_api.dto.StudentDTO;
-import com.schoolflow.School_flow_api.entities.Course;
+import com.schoolflow.School_flow_api.dto.course.CourseDTO;
+import com.schoolflow.School_flow_api.dto.student.EnrolledStudentDTO;
 import com.schoolflow.School_flow_api.services.interfaces.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping(value = "/api/v1/courses")

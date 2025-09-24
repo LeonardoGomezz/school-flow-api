@@ -1,9 +1,7 @@
 package com.schoolflow.School_flow_api.services.interfaces;
 
-import com.schoolflow.School_flow_api.dto.CourseDTO;
-import com.schoolflow.School_flow_api.dto.EnrolledStudentDTO;
-import com.schoolflow.School_flow_api.dto.StudentDTO;
-import com.schoolflow.School_flow_api.entities.Course;
+import com.schoolflow.School_flow_api.dto.course.CourseDTO;
+import com.schoolflow.School_flow_api.dto.student.EnrolledStudentDTO;
 
 import java.util.List;
 

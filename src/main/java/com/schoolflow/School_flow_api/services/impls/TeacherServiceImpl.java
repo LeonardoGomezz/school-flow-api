@@ -1,13 +1,12 @@
 package com.schoolflow.School_flow_api.services.impls;
 
-import com.schoolflow.School_flow_api.dto.TeacherDTO;
+import com.schoolflow.School_flow_api.dto.teacher.TeacherDTO;
 import com.schoolflow.School_flow_api.entities.Teacher;
 import com.schoolflow.School_flow_api.repositories.TeacherRepository;
 import com.schoolflow.School_flow_api.services.interfaces.TeacherService;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

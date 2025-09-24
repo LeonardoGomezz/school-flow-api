@@ -1,6 +1,6 @@
 package com.schoolflow.School_flow_api.services.impls;
 
-import com.schoolflow.School_flow_api.dto.StudentDTO;
+import com.schoolflow.School_flow_api.dto.student.StudentDTO;
 import com.schoolflow.School_flow_api.entities.DocumentType;
 import com.schoolflow.School_flow_api.entities.Student;
 import com.schoolflow.School_flow_api.repositories.DocumentTypeRepository;

@@ -1,7 +1,6 @@
-package com.schoolflow.School_flow_api.dto;
+package com.schoolflow.School_flow_api.dto.attendance;
 
 import com.schoolflow.School_flow_api.entities.AttendanceStatus;
-import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -13,20 +12,8 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @Builder
 @AllArgsConstructor
-public class AttendanceDTO {
-
+public class AttendanceItemDTO {
     private Long id;
-
     private LocalDate date;
-
     private AttendanceStatus status;
-
-    private Long studentId;
-
-    private String studentName;
-
-    private Long courseId;
-
-    private String courseName;
-
 }

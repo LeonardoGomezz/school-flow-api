@@ -1,6 +1,5 @@
 package com.schoolflow.School_flow_api.rest;
 
-import com.schoolflow.School_flow_api.dto.InscriptionDTO;
 import com.schoolflow.School_flow_api.services.interfaces.InscriptionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

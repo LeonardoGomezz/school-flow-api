@@ -1,4 +1,4 @@
-package com.schoolflow.School_flow_api.dto;
+package com.schoolflow.School_flow_api.dto.student;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -25,7 +25,6 @@ public class StudentDTO {
     @Size(min = 2, max = 126, message = "la propiedad name minimo debe tener un valor de 2 caracteres y un maximo de 126 caracteres")
     private String lastName;
 
-    @NotBlank
     private LocalDate birthDate;
 
     @NotBlank

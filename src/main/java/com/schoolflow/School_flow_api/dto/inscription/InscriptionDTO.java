@@ -1,4 +1,4 @@
-package com.schoolflow.School_flow_api.dto;
+package com.schoolflow.School_flow_api.dto.inscription;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

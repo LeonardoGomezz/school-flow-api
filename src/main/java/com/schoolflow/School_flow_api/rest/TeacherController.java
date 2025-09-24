@@ -1,6 +1,6 @@
 package com.schoolflow.School_flow_api.rest;
 
-import com.schoolflow.School_flow_api.dto.TeacherDTO;
+import com.schoolflow.School_flow_api.dto.teacher.TeacherDTO;
 import com.schoolflow.School_flow_api.entities.Teacher;
 import com.schoolflow.School_flow_api.services.interfaces.TeacherService;
 import org.springframework.beans.factory.annotation.Autowired;

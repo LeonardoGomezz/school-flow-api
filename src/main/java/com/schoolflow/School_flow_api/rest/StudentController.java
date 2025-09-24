@@ -1,6 +1,6 @@
 package com.schoolflow.School_flow_api.rest;
 
-import com.schoolflow.School_flow_api.dto.StudentDTO;
+import com.schoolflow.School_flow_api.dto.student.StudentDTO;
 import com.schoolflow.School_flow_api.entities.Student;
 import com.schoolflow.School_flow_api.services.interfaces.StudentService;
 import jakarta.validation.Valid;

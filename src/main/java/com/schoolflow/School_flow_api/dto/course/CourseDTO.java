@@ -1,6 +1,6 @@
-package com.schoolflow.School_flow_api.dto;
+package com.schoolflow.School_flow_api.dto.course;
 
-import com.schoolflow.School_flow_api.entities.Teacher;
+import com.schoolflow.School_flow_api.dto.teacher.TeacherDTO;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
