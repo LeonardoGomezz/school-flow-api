@@ -13,4 +13,6 @@ public interface AssesmentService {
     AssesmentDTO createAssesment(Long courseId, AssesmentDTO assesmentDTO);
 
     AssesmentDTO updateAssesment(Long assesmentId, AssesmentDTO assesmentDTO);
+
+    void deleteAssesment(Long assesmentId);
 }

@@ -114,4 +114,10 @@ public class AssesmentServiceImpl implements AssesmentService {
 
         return assesmentDTO;
     }
+
+    @Override
+    @Transactional
+    public void deleteAssesment(Long assesmentId) {
+        this.assesmentRepository.deleteById(assesmentId);
+    }
 }
