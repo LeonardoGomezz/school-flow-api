@@ -1,5 +1,6 @@
 package com.schoolflow.School_flow_api.entities;
 
+import com.schoolflow.School_flow_api.entities.enums.AttendanceStatus;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
