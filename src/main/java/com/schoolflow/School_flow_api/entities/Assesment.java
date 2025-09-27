@@ -27,12 +27,25 @@ public class Assesment {
     private AssesmentsTypes type;
 
     @Column(name = "percentage")
-    private double percentage;
+    private Double percentage;
 
     @Column(name = "period")
     private Integer period;
 
     @Column(name = "school_year")
     private Integer schoolYear;
+
+    @ManyToOne
+    @JoinColumn(name = "course_id", nullable = false)
+    private Course course;
+
+    public Assesment(String title, String description, AssesmentsTypes type, Double percentage, Integer period, Integer schoolYear){
+        this.title = title;
+        this.description = description;
+        this.type = type;
+        this.percentage = percentage;
+        this.period = period;
+        this.schoolYear = schoolYear;
+    }
 
 }
