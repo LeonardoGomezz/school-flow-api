@@ -93,4 +93,25 @@ public class AssesmentServiceImpl implements AssesmentService {
                 newAssesment.getSchoolYear()
         );
     }
+
+    @Override
+    @Transactional
+    public AssesmentDTO updateAssesment(Long assesmentId, AssesmentDTO assesmentDTO) {
+        Assesment assesment = this.assesmentRepository.findById(assesmentId).orElse(null);
+
+        if (assesment == null ){
+            throw new EntityNotFoundException("Assessment not found");
+        }
+
+        assesment.setTitle(assesmentDTO.getTitle());
+        assesment.setDescription(assesmentDTO.getDescription());
+        assesment.setType(assesment.getType());
+        assesment.setPercentage(assesment.getPercentage());
+        assesment.setPeriod(assesment.getPeriod());
+        assesment.setSchoolYear(assesment.getSchoolYear());
+
+        this.assesmentRepository.save(assesment);
+
+        return assesmentDTO;
+    }
 }

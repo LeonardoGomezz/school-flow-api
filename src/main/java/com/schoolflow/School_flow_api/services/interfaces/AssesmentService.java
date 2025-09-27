@@ -11,4 +11,6 @@ public interface AssesmentService {
     AssesmentDTO getAssesmentById(Long assesmentId);
 
     AssesmentDTO createAssesment(Long courseId, AssesmentDTO assesmentDTO);
+
+    AssesmentDTO updateAssesment(Long assesmentId, AssesmentDTO assesmentDTO);
 }

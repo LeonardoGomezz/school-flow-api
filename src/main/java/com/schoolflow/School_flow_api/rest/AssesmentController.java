@@ -29,4 +29,9 @@ public class AssesmentController {
     public ResponseEntity<AssesmentDTO> createAssesment(@PathVariable Long courseId, @RequestBody AssesmentDTO assesmentDTO){
         return ResponseEntity.ok(this.assesmentService.createAssesment(courseId, assesmentDTO));
     }
+
+    @PutMapping("/{assesmentId}")
+    public ResponseEntity<AssesmentDTO> updateAssesment(@PathVariable Long assesmentId, @RequestBody AssesmentDTO assesmentDTO){
+        return ResponseEntity.ok(this.assesmentService.updateAssesment(assesmentId, assesmentDTO));
+    }
 }
