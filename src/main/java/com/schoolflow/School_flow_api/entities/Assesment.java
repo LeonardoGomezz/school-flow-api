@@ -6,7 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Entity(name = "assesments")
+@Entity(name = "assessments")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -24,6 +24,7 @@ public class Assesment {
     private String description;
 
     @Column(name = "type")
+    @Enumerated(EnumType.STRING)
     private AssesmentsTypes type;
 
     @Column(name = "percentage")
