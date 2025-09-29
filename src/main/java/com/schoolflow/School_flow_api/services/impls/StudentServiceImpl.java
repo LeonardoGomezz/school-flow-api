@@ -1,9 +1,12 @@
 package com.schoolflow.School_flow_api.services.impls;
 
+import com.schoolflow.School_flow_api.dto.course.CourseDTO;
 import com.schoolflow.School_flow_api.dto.student.StudentDTO;
 import com.schoolflow.School_flow_api.entities.DocumentType;
 import com.schoolflow.School_flow_api.entities.Student;
+import com.schoolflow.School_flow_api.repositories.CourseRepository;
 import com.schoolflow.School_flow_api.repositories.DocumentTypeRepository;
+import com.schoolflow.School_flow_api.repositories.InscriptionRepository;
 import com.schoolflow.School_flow_api.repositories.StudentRepository;
 import com.schoolflow.School_flow_api.services.interfaces.StudentService;
 import jakarta.persistence.EntityNotFoundException;
@@ -22,6 +25,8 @@ public class StudentServiceImpl implements StudentService {
     @Autowired
     private DocumentTypeRepository documentTypeRepository;
 
+    @Autowired
+    private InscriptionRepository inscriptionRepository;
 
     @Override
     public List<Student> getAllStudents() {
@@ -37,6 +42,25 @@ public class StudentServiceImpl implements StudentService {
         }
 
         return new StudentDTO(student.getId(), student.getFirstName(), student.getLastName(), student.getBirthDate(), student.getAddress(), student.getPhone(), student.getGuardianName(), student.getGuardianPhone(), student.getDocumentType().getCode(), student.getDocumentNumber());
+    }
+
+    @Override
+    public List<CourseDTO> getStudentCourses(Long studentId) {
+        Student student = this.studentRepository.findById(studentId).orElse(null);
+
+        if (student == null){
+            throw new EntityNotFoundException("Student not found");
+        }
+
+        return this.inscriptionRepository.findCoursesByStudentId(studentId)
+                .stream()
+                .map(course -> CourseDTO.builder()
+                        .id(course.getId())
+                        .name(course.getName())
+                        .grade(course.getGrade())
+                        .teacherId(course.getTeacher() != null ? course.getTeacher().getId() : null)
+                        .build())
+                .toList();
     }
 
     @Transactional
