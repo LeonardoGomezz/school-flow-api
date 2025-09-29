@@ -1,5 +1,6 @@
 package com.schoolflow.School_flow_api.services.interfaces;
 
+import com.schoolflow.School_flow_api.dto.course.CourseDTO;
 import com.schoolflow.School_flow_api.dto.teacher.TeacherDTO;
 import com.schoolflow.School_flow_api.entities.Teacher;
 
@@ -11,6 +12,8 @@ public interface TeacherService {
 
     TeacherDTO getTeacherById(Long teacherId);
 
+    List<CourseDTO> getTeacherCourses(Long teacherId);
+
     TeacherDTO createTeacher(TeacherDTO teacherDTO);
 
     TeacherDTO updateTeacher(Long teacherId, TeacherDTO teacherDTO);
@@ -18,4 +21,5 @@ public interface TeacherService {
     void deleteTeacher(Long teacherId);
 
     Teacher getTeacherEntityById(Long teacherId);
+
 }

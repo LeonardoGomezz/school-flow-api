@@ -1,5 +1,6 @@
 package com.schoolflow.School_flow_api.rest;
 
+import com.schoolflow.School_flow_api.dto.course.CourseDTO;
 import com.schoolflow.School_flow_api.dto.teacher.TeacherDTO;
 import com.schoolflow.School_flow_api.entities.Teacher;
 import com.schoolflow.School_flow_api.services.interfaces.TeacherService;
@@ -26,6 +27,11 @@ public class TeacherController {
     @GetMapping("{teacherId}")
     public ResponseEntity<TeacherDTO> getTeacherById(@PathVariable Long teacherId){
         return ResponseEntity.ok(this.teacherService.getTeacherById(teacherId));
+    }
+
+    @GetMapping("/courses/{teacherId}")
+    public ResponseEntity<List<CourseDTO>>getTeacherCourses(@PathVariable Long teacherId){
+        return ResponseEntity.ok(this.teacherService.getTeacherCourses(teacherId));
     }
 
     @PostMapping

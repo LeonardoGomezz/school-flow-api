@@ -1,7 +1,9 @@
 package com.schoolflow.School_flow_api.services.impls;
 
+import com.schoolflow.School_flow_api.dto.course.CourseDTO;
 import com.schoolflow.School_flow_api.dto.teacher.TeacherDTO;
 import com.schoolflow.School_flow_api.entities.Teacher;
+import com.schoolflow.School_flow_api.repositories.CourseRepository;
 import com.schoolflow.School_flow_api.repositories.TeacherRepository;
 import com.schoolflow.School_flow_api.services.interfaces.TeacherService;
 import jakarta.persistence.EntityNotFoundException;
@@ -16,6 +18,9 @@ public class TeacherServiceImpl implements TeacherService {
 
     @Autowired
     private TeacherRepository teacherRepository;
+
+    @Autowired
+    private CourseRepository courseRepository;
 
     @Override
     public List<Teacher> getAllTeachers() {
@@ -38,6 +43,23 @@ public class TeacherServiceImpl implements TeacherService {
                 teacher.getAddress(),
                 teacher.getPhone()
         );
+    }
+
+    @Override
+    public List<CourseDTO> getTeacherCourses(Long teacherId) {
+        Teacher teacher = this.teacherRepository.findById(teacherId).orElse(null);
+
+        if (teacher == null){
+            throw new EntityNotFoundException("Teacher not found");
+        }
+
+        return this.courseRepository.findCourseByTeacherId(teacherId).stream().map(
+                course -> CourseDTO.builder()
+                        .id(course.getId())
+                        .name(course.getName())
+                        .grade(course.getGrade())
+                        .teacherId(teacherId)
+                        .build()).toList();
     }
 
     @Transactional
