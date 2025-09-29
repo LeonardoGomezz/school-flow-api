@@ -23,6 +23,20 @@ public class AssesmentServiceImpl implements AssesmentService {
     private CourseRepository courseRepository;
 
     @Override
+    public List<AssesmentDTO> getAllAssesments() {
+        return this.assesmentRepository.findAll().stream().map(
+                assesment -> AssesmentDTO.builder()
+                        .id(assesment.getId())
+                        .title(assesment.getTitle())
+                        .description(assesment.getDescription())
+                        .type(assesment.getType())
+                        .percentage(assesment.getPercentage())
+                        .period(assesment.getPeriod())
+                        .schoolYear(assesment.getSchoolYear())
+                        .build()).toList();
+    }
+
+    @Override
     public List<AssesmentDTO> getAllAssesmentsbyCourseId(Long courseId) {
         Course course = this.courseRepository.findById(courseId).orElse(null);
 

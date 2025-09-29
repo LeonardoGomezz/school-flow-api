@@ -6,6 +6,8 @@ import java.util.List;
 
 public interface AssesmentService {
 
+    List<AssesmentDTO> getAllAssesments();
+
     List<AssesmentDTO> getAllAssesmentsbyCourseId(Long courseId);
 
     AssesmentDTO getAssesmentById(Long assesmentId);
@@ -15,4 +17,5 @@ public interface AssesmentService {
     AssesmentDTO updateAssesment(Long assesmentId, AssesmentDTO assesmentDTO);
 
     void deleteAssesment(Long assesmentId);
+
 }

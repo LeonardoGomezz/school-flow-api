@@ -17,6 +17,11 @@ public class AssesmentController {
     @Autowired
     private AssesmentService assesmentService;
 
+    @GetMapping
+    public ResponseEntity<List<AssesmentDTO>>getAllAssesmets(){
+        return ResponseEntity.ok(this.assesmentService.getAllAssesments());
+    }
+
     @GetMapping("/course/{courseId}")
     public ResponseEntity<List<AssesmentDTO>>getAllAssesmentsbyCourseId(@PathVariable Long courseId){
         return ResponseEntity.ok(this.assesmentService.getAllAssesmentsbyCourseId(courseId));
