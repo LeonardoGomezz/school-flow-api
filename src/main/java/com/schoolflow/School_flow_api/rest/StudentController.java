@@ -6,6 +6,9 @@ import com.schoolflow.School_flow_api.entities.Student;
 import com.schoolflow.School_flow_api.services.interfaces.StudentService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,8 +24,12 @@ public class StudentController {
     private StudentService studentService;
 
     @GetMapping
-    public ResponseEntity<List<StudentDTO>> getAllStudents(){
-        return ResponseEntity.ok(this.studentService.getAllStudents());
+    public ResponseEntity<Page<StudentDTO>> getStudents(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<StudentDTO> students = studentService.getAllStudents(pageable);
+        return ResponseEntity.ok(students);
     }
 
     @GetMapping("/{studentId}")

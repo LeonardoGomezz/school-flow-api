@@ -4,7 +4,6 @@ import com.schoolflow.School_flow_api.dto.course.CourseDTO;
 import com.schoolflow.School_flow_api.dto.student.StudentDTO;
 import com.schoolflow.School_flow_api.entities.DocumentType;
 import com.schoolflow.School_flow_api.entities.Student;
-import com.schoolflow.School_flow_api.repositories.CourseRepository;
 import com.schoolflow.School_flow_api.repositories.DocumentTypeRepository;
 import com.schoolflow.School_flow_api.repositories.InscriptionRepository;
 import com.schoolflow.School_flow_api.repositories.StudentRepository;
@@ -12,6 +11,8 @@ import com.schoolflow.School_flow_api.services.interfaces.StudentService;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -29,23 +30,27 @@ public class StudentServiceImpl implements StudentService {
     private InscriptionRepository inscriptionRepository;
 
     @Override
-    public List<StudentDTO> getAllStudents() {
-
-        return this.studentRepository.findAll().stream().map(student -> {
-            Integer grade = student.getInscriptions().stream()
-                    .findFirst()
-                    .map(inscription -> inscription.getCourse().getGrade())
-                    .orElse(null);
-
-            return StudentDTO.builder()
-                    .id(student.getId())
-                    .firstName(student.getFirstName())
-                    .lastName(student.getLastName())
-                    .phone(student.getPhone())
-                    .documentNumber(student.getDocumentNumber())
-                    .gradeName(grade)
-                    .build();
-        }).toList();
+    public Page<StudentDTO> getAllStudents(Pageable pageable) {
+        return studentRepository.findAll(pageable)
+                .map(student -> StudentDTO.builder()
+                        .id(student.getId())
+                        .firstName(student.getFirstName())
+                        .lastName(student.getLastName())
+                        .birthDate(student.getBirthDate())
+                        .address(student.getAddress())
+                        .phone(student.getPhone())
+                        .guardianName(student.getGuardianName())
+                        .guardianPhone(student.getGuardianPhone())
+                        .documentType(student.getDocumentType().getCode())
+                        .documentNumber(student.getDocumentNumber())
+                        .gradeName(
+                                student.getInscriptions().stream()
+                                        .findFirst()
+                                        .map(ins -> ins.getCourse().getGrade())
+                                        .orElse(null)
+                        )
+                        .build()
+                );
     }
 
     @Override
