@@ -6,6 +6,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity(name = "students")
 @Getter
@@ -45,6 +47,9 @@ public class Student {
 
     @JoinColumn(name = "document_number", nullable = false)
     private String documentNumber;
+
+    @OneToMany(mappedBy = "student", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Inscription> inscriptions = new ArrayList<>();
 
     public Student(String firstName, String lastName, LocalDate birthDate, String addres, String phone, String guardianName, String guardianPhone, DocumentType documentType, String documentNumber){
         this.firstName = firstName;

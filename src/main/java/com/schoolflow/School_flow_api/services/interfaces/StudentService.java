@@ -7,7 +7,7 @@ import com.schoolflow.School_flow_api.entities.Student;
 import java.util.List;
 
 public interface StudentService {
-    List<Student> getAllStudents();
+    List<StudentDTO> getAllStudents();
 
     StudentDTO getStudentById(Long studentId);
 

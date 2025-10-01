@@ -29,20 +29,50 @@ public class StudentServiceImpl implements StudentService {
     private InscriptionRepository inscriptionRepository;
 
     @Override
-    public List<Student> getAllStudents() {
-        return this.studentRepository.findAll();
+    public List<StudentDTO> getAllStudents() {
+
+        return this.studentRepository.findAll().stream().map(student -> {
+            Integer grade = student.getInscriptions().stream()
+                    .findFirst()
+                    .map(inscription -> inscription.getCourse().getGrade())
+                    .orElse(null);
+
+            return StudentDTO.builder()
+                    .id(student.getId())
+                    .firstName(student.getFirstName())
+                    .lastName(student.getLastName())
+                    .phone(student.getPhone())
+                    .documentNumber(student.getDocumentNumber())
+                    .gradeName(grade)
+                    .build();
+        }).toList();
     }
 
     @Override
     public StudentDTO getStudentById(Long studentId) {
-        Student student = this.studentRepository.findById(studentId).orElse(null);
+        Student student = this.studentRepository.findById(studentId)
+                .orElseThrow(() -> new EntityNotFoundException("Student not found"));
 
-        if(student == null){
-            throw new EntityNotFoundException("Student not found");
-        }
+        Integer grade = student.getInscriptions().stream()
+                .findFirst()
+                .map(ins -> ins.getCourse().getGrade())
+                .orElse(null);
 
-        return new StudentDTO(student.getId(), student.getFirstName(), student.getLastName(), student.getBirthDate(), student.getAddress(), student.getPhone(), student.getGuardianName(), student.getGuardianPhone(), student.getDocumentType().getCode(), student.getDocumentNumber());
+        return new StudentDTO(
+                student.getId(),
+                student.getFirstName(),
+                student.getLastName(),
+                student.getBirthDate(),
+                student.getAddress(),
+                student.getPhone(),
+                student.getGuardianName(),
+                student.getGuardianPhone(),
+                student.getDocumentType().getCode(),
+                student.getDocumentNumber(),
+                grade
+        );
     }
+
 
     @Override
     public List<CourseDTO> getStudentCourses(Long studentId) {

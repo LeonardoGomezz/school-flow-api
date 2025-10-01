@@ -50,4 +50,6 @@ public class StudentDTO {
     @NotBlank
     @Size(min = 2, max = 20, message = "la propiedad name minimo debe tener un valor de 2 caracteres y un maximo de 20 caracteres")
     private String documentNumber;
+
+    private Integer gradeName;
 }
