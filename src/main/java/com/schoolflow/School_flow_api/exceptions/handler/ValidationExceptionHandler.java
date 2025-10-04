@@ -1,6 +1,7 @@
 package com.schoolflow.School_flow_api.exceptions.handler;
 
 import com.schoolflow.School_flow_api.dto.ExceptionResponseDTO;
+import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -41,6 +42,19 @@ public class ValidationExceptionHandler {
                 .body(new ExceptionResponseDTO(
                         HttpStatus.BAD_REQUEST.value(),
                         "ENTITY_NOT_FOUND",
+                        List.of(exception.getMessage())
+                ));
+    }
+
+    @ExceptionHandler(EntityExistsException.class)
+    public ResponseEntity<ExceptionResponseDTO> validationExceptionHandler(EntityExistsException exception) {
+
+
+        // Retornar DTO con lista de errores
+        return ResponseEntity.badRequest()
+                .body(new ExceptionResponseDTO(
+                        HttpStatus.CONFLICT.value(),
+                        "ENTITY_ALREADY_ASIGNED",
                         List.of(exception.getMessage())
                 ));
     }

@@ -8,6 +8,7 @@ import com.schoolflow.School_flow_api.repositories.DocumentTypeRepository;
 import com.schoolflow.School_flow_api.repositories.InscriptionRepository;
 import com.schoolflow.School_flow_api.repositories.StudentRepository;
 import com.schoolflow.School_flow_api.services.interfaces.StudentService;
+import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -101,8 +102,19 @@ public class StudentServiceImpl implements StudentService {
     @Transactional
     @Override
     public StudentDTO createStudent(StudentDTO studentDTO) {
-        DocumentType doctype = this.documentTypeRepository.findByCode(studentDTO.getDocumentType())
-                .orElseThrow(() -> new EntityNotFoundException("Document type not found"));
+        DocumentType doctype = this.documentTypeRepository.findByCode(studentDTO.getDocumentType()).orElse(null);
+
+        if (doctype == null){
+            throw new EntityNotFoundException("Document type not found");
+        }
+
+        boolean exists = this.studentRepository
+                .existsByDocumentTypeAndDocumentNumber(doctype, studentDTO.getDocumentNumber());
+
+        if (exists) {
+            throw new EntityExistsException("Ya existe un estudiante con ese número de documento.");
+        }
+
         Student newStudent = new Student(studentDTO.getFirstName(), studentDTO.getLastName(), studentDTO.getBirthDate(), studentDTO.getAddress(), studentDTO.getPhone(), studentDTO.getGuardianName(), studentDTO.getGuardianPhone(), doctype, studentDTO.getDocumentNumber());
         newStudent = this.studentRepository.save(newStudent);
         studentDTO.setId(newStudent.getId());
