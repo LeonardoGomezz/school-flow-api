@@ -20,4 +20,5 @@ public interface StudentService {
 
     void deleteStudent(Long studentId);
 
+    Page<StudentDTO> searchStudents(String search, Pageable pageable);
 }

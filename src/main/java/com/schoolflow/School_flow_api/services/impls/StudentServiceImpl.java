@@ -154,4 +154,30 @@ public class StudentServiceImpl implements StudentService {
         this.studentRepository.deleteById(studentId);
     }
 
+    @Override
+    public Page<StudentDTO> searchStudents(String search, Pageable pageable) {
+        Page<Student> students = studentRepository.searchByNameOrDocument(search, pageable);
+
+        return students.map(student -> StudentDTO.builder()
+                .id(student.getId())
+                .firstName(student.getFirstName())
+                .lastName(student.getLastName())
+                .birthDate(student.getBirthDate())
+                .address(student.getAddress())
+                .phone(student.getPhone())
+                .guardianName(student.getGuardianName())
+                .guardianPhone(student.getGuardianPhone())
+                .documentType(student.getDocumentType().getCode())
+                .documentNumber(student.getDocumentNumber())
+                .gradeName(
+                        student.getInscriptions().stream()
+                                .findFirst()
+                                .map(ins -> ins.getCourse().getGrade())
+                                .orElse(null)
+                )
+                .build()
+        );
+    }
+
+
 }

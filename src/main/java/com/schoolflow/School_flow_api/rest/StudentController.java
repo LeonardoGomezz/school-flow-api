@@ -2,7 +2,6 @@ package com.schoolflow.School_flow_api.rest;
 
 import com.schoolflow.School_flow_api.dto.course.CourseDTO;
 import com.schoolflow.School_flow_api.dto.student.StudentDTO;
-import com.schoolflow.School_flow_api.entities.Student;
 import com.schoolflow.School_flow_api.services.interfaces.StudentService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,11 +25,21 @@ public class StudentController {
     @GetMapping
     public ResponseEntity<Page<StudentDTO>> getStudents(
             @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "10") int size) {
+            @RequestParam(defaultValue = "10") int size,
+            @RequestParam(required = false) String search
+    ) {
         Pageable pageable = PageRequest.of(page, size);
-        Page<StudentDTO> students = studentService.getAllStudents(pageable);
+        Page<StudentDTO> students;
+
+        if (search != null && !search.trim().isEmpty()) {
+            students = studentService.searchStudents(search.trim(), pageable);
+        } else {
+            students = studentService.getAllStudents(pageable);
+        }
+
         return ResponseEntity.ok(students);
     }
+
 
     @GetMapping("/{studentId}")
     public ResponseEntity<StudentDTO>getStudentById(@PathVariable Long studentId){

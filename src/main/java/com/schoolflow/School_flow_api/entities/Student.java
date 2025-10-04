@@ -45,7 +45,7 @@ public class Student {
     @JoinColumn(name = "document_type_id")
     private DocumentType documentType;
 
-    @JoinColumn(name = "document_number", nullable = false)
+    @Column(name = "document_number", nullable = false, unique = true)
     private String documentNumber;
 
     @OneToMany(mappedBy = "student", cascade = CascadeType.ALL, orphanRemoval = true)
