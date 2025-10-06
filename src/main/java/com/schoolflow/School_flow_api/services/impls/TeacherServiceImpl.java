@@ -9,6 +9,8 @@ import com.schoolflow.School_flow_api.services.interfaces.TeacherService;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -23,8 +25,16 @@ public class TeacherServiceImpl implements TeacherService {
     private CourseRepository courseRepository;
 
     @Override
-    public List<Teacher> getAllTeachers() {
-        return this.teacherRepository.findAll();
+    public Page<TeacherDTO> getAllTeachers(Pageable pageable) {
+        return this.teacherRepository.findAll(pageable)
+                .map(teacher -> TeacherDTO.builder()
+                        .id(teacher.getId())
+                        .firstName(teacher.getFirstName())
+                        .lastName(teacher.getLastName())
+                        .academicBackground(teacher.getAcademicBackground())
+                        .address(teacher.getAddress())
+                        .phone(teacher.getPhone())
+                        .build());
     }
 
     @Override
@@ -110,5 +120,19 @@ public class TeacherServiceImpl implements TeacherService {
         }
 
         return teacher;
+    }
+
+    @Override
+    public Page<TeacherDTO> searchTeachers(String search, Pageable pageable) {
+        Page<Teacher> teachers = this.teacherRepository.searchByName(search, pageable);
+
+        return teachers.map(teacher -> TeacherDTO.builder()
+                .id(teacher.getId())
+                .firstName(teacher.getFirstName())
+                .lastName(teacher.getLastName())
+                .academicBackground(teacher.getAcademicBackground())
+                .address(teacher.getAddress())
+                .phone(teacher.getPhone())
+                .build());
     }
 }

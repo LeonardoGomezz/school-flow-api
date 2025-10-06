@@ -1,10 +1,14 @@
 package com.schoolflow.School_flow_api.rest;
 
 import com.schoolflow.School_flow_api.dto.course.CourseDTO;
+import com.schoolflow.School_flow_api.dto.student.StudentDTO;
 import com.schoolflow.School_flow_api.dto.teacher.TeacherDTO;
 import com.schoolflow.School_flow_api.entities.Teacher;
 import com.schoolflow.School_flow_api.services.interfaces.TeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,8 +24,20 @@ public class TeacherController {
     private TeacherService teacherService;
 
     @GetMapping
-    public ResponseEntity<List<Teacher>> getAllTeachers(){
-        return ResponseEntity.ok(this.teacherService.getAllTeachers());
+    public ResponseEntity<Page<TeacherDTO>> getAllTeachers(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size,
+            @RequestParam(required = false) String search
+    ){
+        Pageable pageable = PageRequest.of(page, size);
+        Page<TeacherDTO> teachers;
+
+        if (search != null && !search.trim().isEmpty()) {
+            teachers = teacherService.searchTeachers(search.trim(), pageable);
+        }else {
+            teachers = this.teacherService.getAllTeachers(pageable);
+        }
+        return ResponseEntity.ok(teachers);
     }
 
     @GetMapping("{teacherId}")

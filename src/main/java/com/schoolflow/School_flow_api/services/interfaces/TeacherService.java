@@ -3,12 +3,14 @@ package com.schoolflow.School_flow_api.services.interfaces;
 import com.schoolflow.School_flow_api.dto.course.CourseDTO;
 import com.schoolflow.School_flow_api.dto.teacher.TeacherDTO;
 import com.schoolflow.School_flow_api.entities.Teacher;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
 public interface TeacherService {
 
-    List<Teacher> getAllTeachers();
+    Page<TeacherDTO> getAllTeachers(Pageable pageable);
 
     TeacherDTO getTeacherById(Long teacherId);
 
@@ -22,4 +24,5 @@ public interface TeacherService {
 
     Teacher getTeacherEntityById(Long teacherId);
 
+    Page<TeacherDTO> searchTeachers(String search, Pageable pageable);
 }
